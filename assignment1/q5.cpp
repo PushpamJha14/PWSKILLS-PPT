@@ -1,3 +1,6 @@
+#include <bits/stdc++.h>
+using namespace std;
+
 void merge(vector<int> &nums1, int m, vector<int> &nums2, int n)
 {
     int i = m - 1, j = n - 1, k = m + n - 1;
@@ -34,4 +37,26 @@ void merge(vector<int> &nums1, int m, vector<int> &nums2, int n)
             j--;
         }
     }
+}
+
+int main()
+{
+    int n, m;
+    vector<int> nums1(n + m), nums2;
+    cin >> n >> m;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        nums1[i] = x;
+    }
+    for (int i = 0; i < m; i++)
+    {
+        int x;
+        cin >> x;
+        nums2.push_back(x);
+    }
+    merge(nums1, n, nums2, m);
+    for (int i = 0; i < m + n; i++)
+        cout << nums1[i] << " ";
 }
