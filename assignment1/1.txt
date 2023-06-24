@@ -1,0 +1,262 @@
+Q1.
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> v, ans;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        v.push_back(x);
+    }
+    int t;
+    cin >> t;
+    sort(v.begin(), v.end());
+    int l = 0, h = n - 1;
+    while (l < h)
+    {
+        if (v[l] + v[h] == t)
+        {
+            ans.push_back(l);
+            ans.push_back(h);
+            break;
+        }
+        else if (v[l] + v[h] < t)
+            l++;
+        else
+            h--;
+    }
+    cout << ans[0] << " " << ans[1];
+}
+
+
+
+Q2.
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> arr, ans;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        arr.push_back(x);
+    }
+    int t;
+    cin >> t;
+    int i = 0, j = 0;
+    while (j < n)
+    {
+        if (arr[j] != t)
+        {
+            arr[i] = arr[j];
+            i++;
+            j++;
+        }
+        else
+            j++;
+    }
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+}
+
+
+
+Q3.
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> arr, ans;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        arr.push_back(x);
+    }
+    int t;
+    cin >> t;
+    cout << lower_bound(arr.begin(), arr.end(), t) - arr.begin();
+}
+
+
+
+
+Q4.
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> arr, ans;
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        arr.push_back(x);
+    }
+    int carry = 0;
+    for (int i = n - 1; i >= 0; i--)
+    {
+        int x = arr[i];
+        if (i == n - 1)
+            x++;
+        x = x + carry;
+        if (x == 10)
+        {
+            carry = 1;
+            arr[i] = 0;
+        }
+        else
+        {
+            carry = 0;
+            arr[i] = x;
+            break;
+        }
+    }
+
+    if (carry == 1)
+    {
+        ans.push_back(1);
+        for (int i = 0; i < n; i++)
+            ans.push_back(arr[i]);
+    }
+    else
+        ans = arr;
+    for (int i = 0; i < ans.size(); i++)
+        cout << ans[i] << " ";
+}
+
+
+
+
+
+Q5.
+void merge(vector<int> &nums1, int m, vector<int> &nums2, int n)
+{
+    int i = m - 1, j = n - 1, k = m + n - 1;
+    while (i >= 0 && j >= 0)
+    {
+        if (nums1[i] < nums2[j])
+        {
+            nums1[k] = nums2[j];
+            k--;
+            j--;
+        }
+        else
+        {
+            nums1[k] = nums1[i];
+            k--;
+            i--;
+        }
+    }
+
+    {
+        while (i >= 0)
+        {
+            nums1[k] = nums1[i];
+            k--;
+            i--;
+        }
+    }
+
+    {
+        while (j >= 0)
+        {
+            nums1[k] = nums2[j];
+            k--;
+            j--;
+        }
+    }
+}
+
+
+
+
+
+Q6.
+int help(vector<int> &nums)
+{
+    unordered_set<int> s;
+    for (auto &it : nums)
+    {
+        if (s.count(it))
+            return it;
+        s.insert(it);
+    }
+    return -1;
+}
+
+
+
+
+Q7.
+void moveZeroes(vector<int>& nums) {
+        int i=0,j=0;
+        // if(nums.size()<=1)
+        //     return;
+        while(i<nums.size())
+        {
+            if(nums[i]==0)
+            {
+                j=i;
+                while(i<nums.size() && nums[i]==0)
+                   i++;
+                if(i>=nums.size())
+                   return;
+                else{
+                swap(nums[i],nums[j]);
+                // cout<<"a"<<i<<" "<<j<<"a";
+                i=j;
+                i++;
+                }
+            }
+            else
+            i++;
+        }
+        return;
+    }
+
+
+
+
+Q8.
+    int findDuplicate(vector<int>& nums) {
+        int n=nums.size(),sum=0,x;
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i]/n==0)
+            {
+                nums[nums[i]]+=n;
+            }
+            else
+            {
+                nums[nums[i]%n]+=n;
+            }
+            sum+=nums[i];
+        }
+        vector<int> ans;
+        for(int i=0;i<n;i++)
+        {
+            if(nums[i]/n>=2)
+            {
+                ans.push_back(i+1);
+                x=i+1;
+                break;
+            }
+        }
+        int s=n*(n+1)/2;
+        sum-=x;
+        ans.push_back(s-sum);
+        cout<<ans[0]<<ans[1];
+        return -1;
+    }
