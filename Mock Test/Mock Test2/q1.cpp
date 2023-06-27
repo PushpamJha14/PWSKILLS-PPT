@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void moveZeros(std::vector<int> &nums)
+void moveZeros(vector<int> &nums)
 {
     int n = nums.size();
     int nonZeroIndex = 0;
