@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int firstUniqChar(std::string s)
+int firstUniqChar(string s)
 {
     unordered_map<char, int> charCount;
 
