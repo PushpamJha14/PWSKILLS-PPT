@@ -2,32 +2,80 @@
 
 using namespace std;
 
-int findMin(vector<int> &nums)
+vector<vector<int>> generateMatrix(int n)
 {
-    int n = nums.size();
-    int l = 0, h = n - 1, m;
-    if (n == 1)
-        return nums[0];
-    while (l <= h)
+    int num = 1;
+    int rowStart = 0, rowEnd = n - 1;
+    int colStart = 0, colEnd = n - 1;
+    vector<vector<int>> result(n, vector<int>(n, 0));
+
+    while (true)
     {
-        if (nums[l] < nums[h])
-            return nums[l];
-        m = (l + h) / 2;
-        if (m - 1 >= 0 && nums[m] < nums[m - 1])
-            return nums[m];
-        // if(m+1<n && nums[m]>nums[m+1])
-        //     return nums[m+1];
-        if (nums[n - 1] < nums[m])
-            l = m + 1;
-        else
-            h = m - 1;
+        // Fill top row
+        for (int j = colStart; j <= colEnd; j++)
+        {
+            result[rowStart][j] = num;
+            num++;
+        }
+        rowStart++;
+
+        if (rowStart > rowEnd || colStart > colEnd)
+        {
+            break;
+        }
+
+        // Fill right column
+        for (int i = rowStart; i <= rowEnd; i++)
+        {
+            result[i][colEnd] = num;
+            num++;
+        }
+        colEnd--;
+
+        if (rowStart > rowEnd || colStart > colEnd)
+        {
+            break;
+        }
+
+        // Fill bottom row
+        for (int j = colEnd; j >= colStart; j--)
+        {
+            result[rowEnd][j] = num;
+            num++;
+        }
+        rowEnd--;
+
+        if (rowStart > rowEnd || colStart > colEnd)
+        {
+            break;
+        }
+
+        // Fill left column
+        for (int i = rowEnd; i >= rowStart; i--)
+        {
+            result[i][colStart] = num;
+            num++;
+        }
+        colStart++;
     }
-    return nums[m];
+
+    return result;
 }
 
 int main()
 {
-    vector<int> ops = {3, 4, 5, 1, 2};
-    cout << findMin(ops);
+    int n = 3;
+    vector<vector<int>> result = generateMatrix(n);
+
+    // Print the generated matrix
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cout << result[i][j] << " ";
+        }
+        cout << endl;
+    }
+
     return 0;
 }
