@@ -1,21 +1,57 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+
 using namespace std;
+
+vector<int> reconstructPermutation(string s)
+{
+    int n = s.size();
+    vector<int> perm;
+    int start = 0, end = n;
+
+    for (char ch : s)
+    {
+        if (ch == 'I')
+        {
+            perm.push_back(start);
+            start++;
+        }
+        else if (ch == 'D')
+        {
+            perm.push_back(end);
+            end--;
+        }
+    }
+
+    perm.push_back(start);
+    return perm;
+}
 
 int main()
 {
-    vector<int> arr1 = {1, 2, 3, 4, 5, 6, 7, 8};
-    int m = 4, n = 2;
-    vector<vector<int>> ans(m, vector<int>(n, 0));
-    for (int i = 0; i < arr1.size(); i++)
+    string s1 = "IDID";
+    vector<int> perm1 = reconstructPermutation(s1);
+    for (int num : perm1)
     {
-        ans[i / n][i % n] = arr1[i];
+        cout << num << " ";
     }
-    for (int i = 0; i < m; i++)
+    cout << endl;
+
+    string s2 = "III";
+    vector<int> perm2 = reconstructPermutation(s2);
+    for (int num : perm2)
     {
-        for (int j = 0; j < n; j++)
-        {
-            cout << ans[i][j] << " ";
-        }
-        cout << endl;
+        cout << num << " ";
     }
+    cout << endl;
+
+    string s3 = "DDI";
+    vector<int> perm3 = reconstructPermutation(s3);
+    for (int num : perm3)
+    {
+        cout << num << " ";
+    }
+    cout << endl;
+
+    return 0;
 }
