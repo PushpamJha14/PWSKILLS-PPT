@@ -2,28 +2,37 @@
 
 using namespace std;
 
+vector<int> findOriginalArray(vector<int> &a)
+{
+    if (a.size() % 2)
+        return {};
+    vector<int> res;
+    sort(a.begin(), a.end());
+    unordered_map<int, int> mp;
+    for (int i = 0; i < a.size(); i++)
+    {
+        mp[a[i]]++;
+    }
+    for (int i = 0; i < a.size(); i++)
+    {
+        if (mp[a[i]] == 0)
+            continue;
+        if (mp[a[i] * 2] == 0)
+            return {};
+        res.push_back(a[i]);
+        mp[a[i]]--;
+        mp[a[i] * 2]--;
+    }
+    return res;
+}
+
 int main()
 {
-    vector<int> v{4, 3, 2, 7, 8, 2, 3, 1};
-    int n = v.size();
-    for (int i = 0; i < v.size(); i++)
+    vector<int> nums = {1, 3, 4, 2, 6, 8};
+    vector<int> ans = findOriginalArray(nums);
+    for (int num : ans)
     {
-        v[v[i] % n] += n;
+        cout << num << " ";
     }
-    vector<int> ans;
-    for (int i = 0; i < v.size(); i++)
-    {
-        cout << v[i] << " ";
-
-        if ((v[i] / n >= 2 && v[i] % n != 0) || (v[i] / n >= 3))
-        {
-            if (i == 0)
-                ans.push_back(n);
-            else
-                ans.push_back(i);
-        }
-    }
-    cout << endl;
-    for (int i = 0; i < ans.size(); i++)
-        cout << ans[i] << " ";
+    return 0;
 }
