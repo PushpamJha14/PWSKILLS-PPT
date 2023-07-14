@@ -1,45 +1,43 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
-vector<vector<int>> help(vector<int> &arr1, vector<int> &arr2)
+int findMaxLength(vector<int> &nums)
 {
-    unordered_set<int> s1, s2;
-    for (int i = 0; i < arr1.size(); i++)
+    int n = nums.size();
+    unordered_map<int, int> countMap;
+    int maxLen = 0;
+    int count = 0;
+
+    // Initialize countMap with an entry (0, -1) to handle starting from index 0
+    countMap[0] = -1;
+
+    for (int i = 0; i < n; i++)
     {
-        s1.insert(arr1[i]);
+        count += (nums[i] == 0) ? -1 : 1;
+
+        if (countMap.find(count) != countMap.end())
+        {
+            maxLen = max(maxLen, i - countMap[count]);
+        }
+        else
+        {
+            countMap[count] = i;
+        }
     }
-    for (int i = 0; i < arr2.size(); i++)
-    {
-        s2.insert(arr2[i]);
-        if (s1.find(arr2[i]) != s1.end())
-            s1.erase(arr2[i]);
-    }
-    for (int i = 0; i < arr1.size(); i++)
-    {
-        if (s2.find(arr1[i]) != s2.end())
-            s2.erase(arr1[i]);
-    }
-    vector<vector<int>> ans;
-    vector<int> v1, v2;
-    for (auto it : s1)
-        v1.push_back(it);
-    for (auto it : s2)
-        v2.push_back(it);
-    ans.push_back(v1);
-    ans.push_back(v2);
-    return ans;
+
+    return maxLen;
 }
 
 int main()
 {
-    int n, target;
-    vector<int> arr1 = {1, 2, 3}, arr2 = {2, 4, 6};
-    vector<vector<int>> ans = help(arr1, arr2);
-    for (int i = 0; i < ans.size(); i++)
-    {
-        for (int j = 0; j < ans[i].size(); j++)
-            cout << ans[i][j] << " ";
-        cout << endl;
-    }
+    vector<int> nums1 = {0, 1};
+    cout << findMaxLength(nums1) << endl; // 2
+
+    vector<int> nums2 = {0, 1, 0};
+    cout << findMaxLength(nums2) << endl; // 2
+
+    vector<int> nums3 = {0, 0, 1, 0, 0, 0, 1, 1};
+    cout << findMaxLength(nums3) << endl; // 6
+
+    return 0;
 }
