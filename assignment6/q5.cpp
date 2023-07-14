@@ -2,39 +2,27 @@
 
 using namespace std;
 
-int distanceValue(vector<int> &arr1, vector<int> &arr2, int d)
+int minProductSum(vector<int> &nums1, vector<int> &nums2)
 {
-    int distance = 0;
+    int n = nums1.size();
 
-    for (int num1 : arr1)
+    sort(nums1.begin(), nums1.end());
+    sort(nums2.begin(), nums2.end(), greater<int>());
+
+    int minProductSum = 0;
+    for (int i = 0; i < n; i++)
     {
-        bool found = false;
-        for (int num2 : arr2)
-        {
-            if (abs(num1 - num2) <= d)
-            {
-                found = true;
-                break;
-            }
-        }
-
-        if (!found)
-        {
-            distance++;
-        }
+        minProductSum += nums1[i] * nums2[i];
     }
 
-    return distance;
+    return minProductSum;
 }
 
 int main()
 {
-    vector<int> arr1 = {4, 5, 8};
-    vector<int> arr2 = {10, 9, 1, 8};
-    int d = 2;
-
-    int result = distanceValue(arr1, arr2, d);
-    cout << "Distance value: " << result << endl;
+    vector<int> nums1 = {5, 2, 3, 4};
+    vector<int> nums2 = {4, 2, 2, 5};
+    cout << minProductSum(nums1, nums2) << endl;
 
     return 0;
 }
